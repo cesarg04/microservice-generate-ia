@@ -3,9 +3,6 @@ dotenv.config()
 
 export const ENVIRONMENT: IEnvironment = {
     port: process.env.PORT,
-    cloudinaryApiKey: process.env.CLOUD_API_KEY,
-    cloudinaryApiSecret: process.env.CLOUD_API_SECRET,
-    cloudinaryName: process.env.CLOUD_NAME,
     database: process.env.DB_DATABASE,
     dbHost: process.env.DB_HOST,
     dbPassword: process.env.DB_PASSWORD,
@@ -18,9 +15,6 @@ export const ENVIRONMENT: IEnvironment = {
 
 export interface IEnvironment {
     port: string;
-    cloudinaryApiKey: string;
-    cloudinaryApiSecret: string;
-    cloudinaryName: string;
     database: string;
     dbHost: string;
     dbPassword: string;
