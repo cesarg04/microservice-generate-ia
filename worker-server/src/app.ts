@@ -1,5 +1,3 @@
-
-import OpenAI from "openai";
 import dotenv from 'dotenv'
 import { connectToRabbitMQ } from './app/config/rabbitqm.config'
 import { ResourcesQueues } from "./app/constants/queues/resources-queues.const";
@@ -7,7 +5,6 @@ import { IPayloadResource } from "./app/types/payload-resource.type";
 import { generateInfoIa } from "./app/helpers/generate-info-ia.helper";
 import { generatePdf } from "./app/helpers/generate-pdf.helper";
 import { uploadFileToCloud } from "./app/helpers/upload-file-to-server";
-import { content } from "pdfkit/js/page";
 
 dotenv.config()
 

@@ -32,6 +32,7 @@ export const validate_jwt = async(req: RequestCustom, res: Response, next: NextF
     try {
         const { uid } = Jwt.verify(token, ENVIRONMENT.jwtSecret as string) as { uid: string }
         const user = await userService.findOneBy({ id: uid })
+        console.log(user);
 
         if (!user) {
             return res.status(401).json({
