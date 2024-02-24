@@ -6,13 +6,16 @@ import { routesPath } from '../app/constants/routes/routes.const';
 import {pagination} from 'typeorm-pagination'
 import authRoutes from '../app/routes/auth/auth.route'
 import resourcesRoutes from '../app/routes/resources/resources.route'
-import { connectToRabbitMQ } from './rabbitqmConnection';
 import { listenErrorResource, listenResponseResource } from './rabbitqmListen';
+import SocketIo from 'socket.io'
+import http from 'http'
 
 class Server {
 
     private app: express.Application;
     private port: string;
+    private httpServer: http.Server; // Agrega una variable para el servidor HTTP
+    private io: SocketIo.Server; // Agrega una variable para el servidor de Socket.IO
 
     constructor(){
         this.app = express()
@@ -21,6 +24,15 @@ class Server {
         this.middlewares()
         this.routes()
         this.rabbitQmListen()
+
+         // Crea un servidor HTTP utilizando el servidor Express
+         this.httpServer = http.createServer(this.app);
+         // Crea un servidor de Socket.IO y únelo al servidor HTTP
+         this.io = new SocketIo.Server(this.httpServer, {
+            cors: {
+                origin: '*'
+            }
+         });
     }
 
 
@@ -57,7 +69,7 @@ class Server {
     }
 
     listen(){
-        this.app.listen(this.port, () => {
+        this.httpServer.listen(this.port, () => {
             console.log(`Server on Port ${ this.port }`);
         })
     }
