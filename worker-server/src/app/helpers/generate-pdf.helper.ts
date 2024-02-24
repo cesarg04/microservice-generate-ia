@@ -1,11 +1,12 @@
 import pdfDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
+import { processString } from './upload-file-to-server';
 
 export const generatePdf = (title: string, content: string, id: string) => {
     return new Promise((resolve, reject) => {
         const doc = new pdfDocument();
-        const routePdf = path.join(__dirname, '../../../temp', `${title}.pdf`);
+        const routePdf = path.join(__dirname, '../../../temp', `${processString(title)}.pdf`);
         
         // Error handler when creating the write stream
         const outputStream = fs.createWriteStream(routePdf);
