@@ -27,6 +27,9 @@ export class Resource {
     )
     user: User
 
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+
     @AfterInsert()
     async updateStatus() {
         if (this.url && this.status === Status.PENDING) {

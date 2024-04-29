@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validateFields } from "../../middlewares/validate-fields.middleware";
-import { loginUser, registerUser } from "../../controllers";
+import { getCurrentUser, loginUser, registerUser } from "../../controllers";
+import { validate_jwt } from "../../middlewares/validate-jwt.middleware";
 
 const router = Router()
 
@@ -18,5 +19,8 @@ router.post('/login', [
     validateFields
 ], loginUser)
 
+router.get('/user', [
+    validate_jwt,
+], getCurrentUser)
 
 export default router;

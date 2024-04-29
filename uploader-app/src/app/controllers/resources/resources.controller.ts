@@ -11,17 +11,15 @@ const resourcesService = AppDataSource.getRepository(Resource)
 
 
 export const getResources = async (req: RequestCustom, res: Response) => {
-
-    const resources = await resourcesService.find({ where: {  user: req.user} })
-    
+    const resources = await resourcesService.find({ 
+        where: {  user: req.user}, 
+        order: { createdAt: 'DESC' }
+    })
     return res.json(resources)
 }
 
 export const createResource = async (req: RequestCustom, res: Response) => {
-
     const { title } = req.body as ICreateResource;
-
-
     try {
         const resource = resourcesService.create({ title, user: req.user })
         await resourcesService.save(resource)
@@ -42,15 +40,13 @@ export const createResource = async (req: RequestCustom, res: Response) => {
 
 export const getResourceById = async (req: RequestCustom, res: Response) => {
     const { id } = req.params as { id: string };
-
     const resource = await resourcesService.findOneBy({ id })
-
     if (!resource) {
         res.status(404).json({
             msg: 'Resource not found'
         })
     }
-
     return res.json(resource)
-
 }
+
+
