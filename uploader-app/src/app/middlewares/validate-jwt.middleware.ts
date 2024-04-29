@@ -9,11 +9,20 @@ import { ENVIRONMENT } from "../constants/env/env.const";
 export const validate_jwt = async(req: RequestCustom, res: Response, next: NextFunction) => {
     const userService = AppDataSource.getRepository(User)
     const token = req.header('x-token') as string;
+
+    const jwtRegex = /^([A-Za-z0-9-_=]+\.)+([A-Za-z0-9-_=]+)?\.[A-Za-z0-9-_=]+$/;
+
     if (!token) {
-        res.status(401).json({
+        return res.status(401).json({
             message: 'Not has token in requet'
         })
     }
+    if (!jwtRegex.test(token)) {
+        return res.status(401).json({
+            message: 'Not has token in requet'
+        })
+    }
+
     // Comprobe if token is expired 
 
     // try {
@@ -32,7 +41,6 @@ export const validate_jwt = async(req: RequestCustom, res: Response, next: NextF
     try {
         const { uid } = Jwt.verify(token, ENVIRONMENT.jwtSecret as string) as { uid: string }
         const user = await userService.findOneBy({ id: uid })
-        console.log(user);
 
         if (!user) {
             return res.status(401).json({

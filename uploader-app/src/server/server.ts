@@ -54,7 +54,6 @@ class Server {
 
         } catch (error) {
             console.log('Error running the database');
-            console.log(error);
         }
     }
 
