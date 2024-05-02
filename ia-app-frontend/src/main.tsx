@@ -14,9 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <CookieManagerProvider>
      <QueryClientProvider client={queryClient} >
-     {/* <ReactQueryDevtools client={queryClient} initialIsOpen={false} /> */}
       <NextUIProvider>
         <NextThemesProvider attribute="class" defaultTheme="" >
+     <ReactQueryDevtools initialIsOpen={false} />
           {/* El browser router es la configurtacion de react-router-dom para manejar las rutas de la aplicacion */}
           <App />
         </NextThemesProvider>
