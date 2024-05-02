@@ -17,14 +17,8 @@ const MenuOptions = () => {
         navigate(PATH_ROUTES_RESOURCES.RESOURCES_ID(id))
     }
 
-    const colors = {
-        'success': 'green-400',
-        'fail': 'red-400',
-        'progress': 'gray-500'
-    }
-
     return (
-        <div className="w-2/12 h-full bg-slate-600 " >
+        <div className="w-2/12 min-w[200px] h-full bg-slate-600 " >
             <div className="p-5 cursor-pointer" 
                 onClick={() => {
                     navigate('/')

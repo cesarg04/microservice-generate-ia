@@ -79,8 +79,8 @@ const Register = () => {
                                     <BtnCustom
                                         color='primary'
                                         type='submit'
-                                        isLoading={serviceMutation.isPending}
-                                        disabled={serviceMutation.isPending}
+                                        isLoading={serviceMutation.isLoading}
+                                        disabled={serviceMutation.isLoading}
                                     >
                                         Registrarse
                                     </BtnCustom>

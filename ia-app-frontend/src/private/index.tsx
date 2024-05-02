@@ -11,13 +11,13 @@ const HomeComponent = lazy(() => import("@private/modules/home/Home"))
 export const PrivateModules = () => {
 
     return (
-        <PublicErrorBoundary>
-            <MainLayout>
+        <MainLayout>
+            <PublicErrorBoundary>
                 <Routes>
                     <Route path="/" element={<HomeComponent />} />
-                    <Route path={PATH_ROUTER_RESOURCES.RESOURCES_ID} element={<Resources/>} />
+                    <Route path={PATH_ROUTER_RESOURCES.RESOURCES_ID} element={<Resources />} />
                 </Routes>
-            </MainLayout>
-        </PublicErrorBoundary>
+            </PublicErrorBoundary>
+        </MainLayout>
     )
 }

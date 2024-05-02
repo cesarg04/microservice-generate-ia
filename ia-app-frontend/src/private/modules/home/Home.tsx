@@ -1,14 +1,12 @@
 import { useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { resourcesServices } from '@/shared/models/services/resources/resources.service';
 import { SuspenseComponent } from '@/shared/components/error-boundary/public-error-boundary';
-import Typography from '@/shared/components/typographi/Typograpy';
-import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from '@nextui-org/react';
+import { useResourcesContext } from '@/context/resources.context';
 
 const HomePage = () => {
 
     const navigate = useNavigate()
-    const { createResource } = resourcesServices()
+    const { mutation } = useResourcesContext()
 
     useEffect(() => {
 
@@ -17,88 +15,26 @@ const HomePage = () => {
     }, [])
 
     const resourceData = useMemo(() => {
-        return createResource.data?.data
-    }, [createResource.data?.data])
+        return mutation?.data?.data
+    }, [mutation?.data?.data])
 
-    if (createResource.isPending) {
+    if (mutation?.isLoading) {
         return (
             <SuspenseComponent />
         )
     }
 
-    useEffect(() => {
-      
-        console.log(createResource.data);
-    }, [createResource])
-    
-
-
     return (
         <div className='h-full'>
-            {
-                !createResource.data?.data && (
-                    <div className='pt-20' >
-                        <Typography
-                            align='center'
-                            color='text-black'
-                            family='main'
-                            weight='700'
-                            size='6xl'
-                        >
-                            Escriba lo que desea imprimir
-                        </Typography>
-                        <Typography
-                            align='center'
-                            color='text-black'
-                            family='main'
-                            size='lg'
-                        >
-                            Lo que escriba sera imprimido en PDF
-                        </Typography>
-                    </div>
-                )
-            }
-            {
-                createResource.data?.data && (
-                    <div className='w-full h-hull flex justify-center items-center' >
-                        <Card className="max-w-[400px] min-w-[300px]">
-                            <CardHeader className="flex gap-3">
-                                <Image
-                                    alt="nextui logo"
-                                    height={40}
-                                    radius="sm"
-                                    src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-                                    width={40}
-                                />
-                                <div className="flex flex-col">
-                                    <p className="text-md">{ }</p>
-                                    <p className="text-small text-default-500">{resourceData?.msg}</p>
-                                    <Typography
-                                        family='main'
-                                        color='text-default-500'
-                                    >
-                                        {resourceData?.msg ?? 'jskdhjsk'}
-                                    </Typography>
-                                </div>
-                            </CardHeader>
-                            <Divider />
-                            <CardBody>
-                                <Typography>
-                                    {resourceData?.resource.title ?? 'dfhdk'}
-                                </Typography>
-                            </CardBody>
-                            <Divider />
-                            <CardFooter>
-                                <Link
-                                    to={`/resources/${resourceData?.resource.id}`}
-                                >
-                                    Ver documento
-                                </Link>
-                            </CardFooter>
-                        </Card>
-                    </div>
-                )
-            }
+            <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+                <div className="max-w-md bg-white p-8 rounded shadow-md text-center">
+                    <h2 className="text-3xl font-semibold text-gray-800 mb-4">Escriba lo que desea imprimir</h2>
+                    <p className="text-gray-700 mb-4">El contenido será impreso en un PDF</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-blue-500 animate-bounce mx-auto" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 3a1 1 0 00-.707.293l-7 7a1 1 0 101.414 1.414L10 5.414l6.293 6.293a1 1 0 001.414-1.414l-7-7A1 1 0 0010 3z" clipRule="evenodd" />
+                    </svg>
+                </div>
+            </div>
 
         </div>
     )

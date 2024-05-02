@@ -83,8 +83,8 @@ const Login = () => {
                   <BtnCustom
                     color='primary'
                     type='submit'
-                    isLoading={loginMutation.isPending}
-                    disabled={loginMutation.isPending}
+                    isLoading={loginMutation.isLoading}
+                    disabled={loginMutation.isLoading}
                   >
                     Iniciar Sesion
                   </BtnCustom>
