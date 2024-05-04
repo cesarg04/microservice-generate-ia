@@ -3,6 +3,7 @@ import { Viewer, Worker, SpecialZoomLevel, RenderViewer } from '@react-pdf-viewe
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { Status } from "@/shared/models/services/resources/responses/get-list-respurces.response";
+import OptionsButtons from "../options-buttons/OptionsButtons";
 interface IDocumentProps {
     url: string
     status: Status
@@ -18,28 +19,29 @@ const PdfViiewer: FC<IDocumentProps> = (props) => {
     if (!isUrl && props.status === Status.Pending) {
         return <IsPending />
     }
-    if (!isUrl) return (
+    if (!isUrl && props.status === Status.Error ) return (
         <IsError />
     )
-
-    useEffect(() => {
-      
-        console.log(props);
-      
-    }, [props])
     
+    if (isUrl) {
+        return (
+            <div className="w-full h-full " >
+                      <OptionsButtons url={props.url} />
+                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" >
+                    <Viewer
+                        defaultScale={SpecialZoomLevel.ActualSize}
+                        fileUrl={props.url}
+    
+                    />
+                </Worker>
+            </div>
+        )
+    }
 
     return (
-        <div className="w-full h-full " >
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" >
-                <Viewer
-                    defaultScale={SpecialZoomLevel.ActualSize}
-                    fileUrl={props.url}
-
-                />
-            </Worker>
-        </div>
+        <IsPending/>
     )
+
 }
 
 export default PdfViiewer;
@@ -66,11 +68,11 @@ const IsError = () => {
     return (
         <div className="bg-gray-100 min-h-screen flex items-center justify-center">
             <div className="max-w-md bg-white p-8 rounded shadow-md">
-                <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Error al cargar el PDF</h2>
+                <h2 className="text-2xl font-semibold text-center    text-gray-800 mb-4">Error al cargar el PDF</h2>
                 <p className="text-gray-700 mb-4">Lo sentimos, no se pudo cargar el PDF o está pendiente de carga. Por favor, inténtalo nuevamente más tarde.</p>
                 <img src="error_image.png" alt="Error Image" className="mx-auto mb-4" />
                 <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-full">Intentar de nuevo</button>
-            </div>
+            </div>      
         </div>
     )
 }
