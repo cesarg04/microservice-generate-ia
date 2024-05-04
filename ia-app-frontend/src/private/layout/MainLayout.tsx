@@ -1,11 +1,14 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import MenuOptions from "../modules/home/components/menu-options/MenuOptions"
 import FieldText from "../modules/home/components/field-text/FieldText"
 import { ResourcesContextProvider } from "@/context/resources.context"
+import { io } from "socket.io-client"
+import { toast } from "react-toastify"
 
 interface IMainLayoutProps {
     children: React.ReactNode
 }
+
 
 const MainLayout: FC<IMainLayoutProps> = (props) => {
 

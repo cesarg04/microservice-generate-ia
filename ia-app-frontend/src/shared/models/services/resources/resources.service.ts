@@ -19,10 +19,11 @@ export const resourcesServices = (options?: resourcesOptions) => {
     )
 
     const getResourcesById = useQuery({
-        queryKey: ['resources-id'],
+        queryKey: ['resources-id', options?.id],
         queryFn: () => api.get<IGetListResponse>(`/resources/${ options?.id }`),
         enabled: options?.id !== undefined && options.id?.length > 0,
-    })
+        refetchInterval: 5000
+    }, )
 
     const createResource = useMutation({
         mutationFn: (q: string) => {
