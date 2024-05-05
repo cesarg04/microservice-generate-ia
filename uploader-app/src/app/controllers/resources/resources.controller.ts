@@ -6,8 +6,8 @@ import { ICreateResource } from "../../types/resources/create-resource.type";
 import { ResourcesQueues } from "../../constants/queues/resources-queues.const";
 import { connectToRabbitMQ } from "../../../server/rabbitqmConnection";
 
-const resourcesService = AppDataSource.getRepository(Resource)
 
+const resourcesService = AppDataSource.getRepository(Resource);
 
 
 export const getResources = async (req: RequestCustom, res: Response) => {

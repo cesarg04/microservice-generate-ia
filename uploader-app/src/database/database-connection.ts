@@ -16,6 +16,6 @@ export const AppDataSource = new DataSource({
         User
     ],
     synchronize: false,
-    logging: true,
-    url: ENVIRONMENT.dbUrl
+    logging: ['error'],
+    url: ENVIRONMENT.dbUrl,
 });

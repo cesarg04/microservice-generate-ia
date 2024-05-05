@@ -24,17 +24,23 @@ class Server {
         this.middlewares()
         this.routes()
         this.rabbitQmListen()
-
-         // Crea un servidor HTTP utilizando el servidor Express
-         this.httpServer = http.createServer(this.app);
-         // Crea un servidor de Socket.IO y únelo al servidor HTTP
-         this.io = new SocketIo.Server(this.httpServer, {
+        
+        // Crea un servidor HTTP utilizando el servidor Express
+        this.httpServer = http.createServer(this.app);
+        // Crea un servidor de Socket.IO y únelo al servidor HTTP
+        this.io = new SocketIo.Server(this.httpServer, {
             cors: {
                 origin: '*'
             }
-         });
+        });
+        this.socketOn()
     }
 
+    socketOn() {
+        this.io.on('connection', (socket: SocketIo.Socket) => {
+            console.log('client Connected');
+        })
+    }
 
     middlewares() {
         this.app.use(cors())
@@ -65,6 +71,10 @@ class Server {
     async rabbitQmListen(){
         await listenResponseResource()
         await listenErrorResource()
+    }
+
+    getIO(): SocketIo.Server {
+        return this.io;
     }
 
     listen(){

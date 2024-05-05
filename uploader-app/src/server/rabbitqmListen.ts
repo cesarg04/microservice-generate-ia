@@ -3,8 +3,11 @@ import { Resource, Status } from "../app/entities/report.entity"
 import { IResponseSuccess } from "../app/types"
 import { AppDataSource } from "../database/database-connection"
 import { connectToRabbitMQ } from "./rabbitqmConnection"
+import WebSocketServer from "./socketService"
+
 
 const resourcesServices = AppDataSource.getRepository(Resource)
+
 
 export const listenResponseResource = async() => {
     const { channel } = await connectToRabbitMQ()
@@ -13,7 +16,6 @@ export const listenResponseResource = async() => {
         if (msg !== null) {
             try {
                 const content = JSON.parse(msg.content.toString()) as IResponseSuccess;
-                console.log(content);
                 const query = resourcesServices.createQueryBuilder()
                 query
                 .update(Resource)
@@ -23,7 +25,6 @@ export const listenResponseResource = async() => {
             } catch (error) {
                 console.log(error);
             }
-
         }
 
     })
